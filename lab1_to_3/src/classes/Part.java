@@ -1,48 +1,19 @@
 package classes;
 
-/**
- * Part - прототип
- */
-public abstract class Part implements Cloneable {
-    protected String id;
-    protected String name;
-    protected String brand;
-    protected double price;
-    protected String category;
+public class Part implements Cloneable {
+    private String name;
+    private double price;
 
-    public Part(String id, String name, String brand, double price, String category) {
-        this.id = id;
+    public Part(String name, double price) {
         this.name = name;
-        this.brand = brand;
         this.price = price;
-        this.category = category;
     }
 
-    public String getInfo() {
-        return String.format("Part[id=%s,name=%s,brand=%s,price=%.2f,category=%s]",
-                id, name, brand, price, category);
-    }
-
-    @Override
     public Part clone() {
-        try {
-            Part cloned = (Part) super.clone(); // shallow copy is OK for primitives/immutable
-            System.out.println("[Prototype] Клоновано: " + cloned.getInfo());
-            return cloned;
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError(e);
-        }
+        return new Part(this.name, this.price);
+    }
+
+    public void info() {
+        System.out.println("Запчастина: " + name + " | Ціна: " + price);
     }
 }
-
-/** Конкретні частини */
-public class EnginePart extends Part {
-    private String engineModel;
-
-    public EnginePart(String id, String name, String brand, double price, String engineModel) {
-        super(id, name, brand, price, "Engine");
-        this.engineModel = engineModel;
-    }
-}
-
-/* Аналогічно можна створити BodyPart, ElectricalPart */

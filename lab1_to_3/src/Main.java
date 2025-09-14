@@ -1,15 +1,40 @@
+import classes.*;
+
 //TIP Чтобы <b>запустить</b> код, нажмите <shortcut actionId="Run"/> или
 // нажмите на значок <icon src="AllIcons.Actions.Execute"/> на полях.
 public class Main {
     public static void main(String[] args) {
-        //TIP Нажмите <shortcut actionId="ShowIntentionActions"/>, когда курсор находится на подсвеченном тексте,
-        // чтобы увидеть предложения IntelliJ IDEA по исправлению.
-        System.out.printf("Hello and welcome!");
+        Store store = Store.getInstance();
+        store.info();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Нажмите <shortcut actionId="Debug"/>, чтобы начать отладку кода. Мы установили одну <icon src="AllIcons.Debugger.Db_set_breakpoint"/> точку останова
-            // для вас, но вы всегда можете добавить больше, нажав <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        // Prototype
+        Part original = new Part("Battery", 150);
+        Part copy = original.clone();
+        original.info();
+        copy.info();
+
+        // Factory Method
+        PartFactory brakeFactory = new BrakeFactory();
+        Part brake = brakeFactory.createPart();
+        brake.info();
+
+        // Abstract Factory
+        AbstractCarFactory bmwFactory = new BMWFactory();
+        Part bmwEngine = bmwFactory.createEngine();
+        bmwEngine.info();
+
+        // Builder
+        Order order = new OrderBuilder()
+                .setCustomer("Іван")
+                .addPart(bmwEngine)
+                .addPart(brake)
+                .build();
+        order.showOrder();
+
+        // Object Pool
+        PartPool pool = new PartPool();
+        Part pooledPart = pool.acquire();
+        pooledPart.info();
+        pool.release(pooledPart);
     }
 }
